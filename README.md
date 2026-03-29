@@ -18,8 +18,6 @@ _If you would like to rename your files, please do so before encrypting them._
 
 ```
 _Language: Python 3.10_
-
 _Library: Tkinter / Cryptography_
-
 _Release Date: 29.03.2026_
 ```
