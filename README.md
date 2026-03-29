@@ -1,4 +1,7 @@
-Vault is a lightweight, modern encryption utility designed to keep your sensitive files private using AES-256-GCM. It features a sleek "Navy" themed interface and a built-in wizard to guide you through the process.
+Vault is a lightweight, modern encryption utility designed to keep your sensitive files private using AES-256-GCM.
+
+<img width="350" height="250" alt="изображение" src="https://github.com/user-attachments/assets/d71c558a-0141-4d2f-9e03-b2aa258b203a" />
+
 
 Unbreakable encryption: Uses AES-256-GCM authenticated encryption.
 Beutiful UI: A clean interface with an easily navigatable and aesthetic UI, includes a wizard.
