@@ -1,4 +1,4 @@
-# Vault file Encryption
+# Vault file encryption
 
 Vault is a lightweight, modern encryption utility designed to keep your sensitive files private using AES-256-GCM.
 
@@ -6,7 +6,9 @@ Vault is a lightweight, modern encryption utility designed to keep your sensitiv
 
 
 Unbreakable encryption: Uses AES-256-GCM authenticated encryption.
+
 Beutiful UI: A clean interface with an easily navigatable and aesthetic UI, includes a wizard.
+
 Portable: Available as a single standalone .exe for Windows.
 
 Encrypt: Select a file, enter a strong passphrase, and click "Encrypt File". This creates a .vault version of your file.
