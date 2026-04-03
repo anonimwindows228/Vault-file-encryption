@@ -102,7 +102,6 @@ def _encrypt_aes(input_path, output_path, password, progress):
     salt  = os.urandom(SALT_SIZE)
     nonce = os.urandom(NONCE_SIZE)
 
-    p(0.20, "Deriving key — this takes a moment…")
     key = _derive_aes_key(password, salt)
 
     p(0.80, "Encrypting…")
@@ -147,7 +146,6 @@ def _decrypt_aes(input_path, output_dir, password, progress, magic: bytes) -> st
 
     out_path = safe_output_path(os.path.join(output_dir, original_name))
 
-    p(0.20, "Deriving key — this takes a moment…")
     key = _derive_aes_key(password, salt)
 
     p(0.80, "Decrypting & verifying…")
@@ -174,7 +172,6 @@ def _encrypt_blowfish(input_path, output_path, password, progress):
     salt = os.urandom(SALT_SIZE)
     iv   = os.urandom(BF_IV_SIZE)
 
-    p(0.20, "Deriving Blowfish key — this takes a moment…")
     key = _derive_bf_key(password, salt)
 
     p(0.80, "Encrypting with Blowfish-CBC…")
@@ -210,7 +207,6 @@ def _decrypt_blowfish(input_path, output_dir, password, progress, magic: bytes) 
 
     out_path = safe_output_path(os.path.join(output_dir, original_name))
 
-    p(0.20, "Deriving Blowfish key — this takes a moment…")
     key = _derive_bf_key(password, salt)
 
     p(0.80, "Decrypting with Blowfish-CBC…")
