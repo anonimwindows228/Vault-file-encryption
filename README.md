@@ -13,6 +13,7 @@ Thank you very much to @Kflone5 for help with UI development!!
 Lates version:
 
 **WinVFE v1.5.1**
+
 _06.04.2026_
 
 ### New features
