@@ -10,38 +10,30 @@ Thank you very much to @Kflone5 for help with UI development!!
 <img width="150" height="100" alt="Снимок экрана 2026-04-01 185827" src="https://github.com/user-attachments/assets/e2516577-63ea-4ef3-bf2a-a4a080946870" />
 <img width="150" height="100" alt="Снимок экрана 2026-04-01 185833" src="https://github.com/user-attachments/assets/7533e9b1-756e-4e40-9b17-60f781e72913" />
 
-Lates patch:
+Lates version:
 
-WinVFE (Vault) 1.1.5 Patch
-03.04.2026
+**WinVFE v1.5.1**
+_06.04.2026_
 
-Fixed:
+### New features
+- **Right-click context menu** - Encrypt, Decrypt, Compress, Decompress with WinVFE now appear when right-clicking any file in Windows Explorer. Installed automatically via the Inno Setup installer.
+- **Windows installer** - `WinVFE_Setup_v1.5.1.exe` built with Inno Setup. Installs to Program Files, writes registry keys, creates Start Menu and desktop shortcuts, includes a working uninstaller.
+- **Encrypted ZIP support** - ZIP archives can now be password-protected using AES-256 encryption via `pyzipper`. Requires `pip install pyzipper`.
+- **Open folder button** -After any compress/encrypt/decrypt operation, a button appears next to the result label to open the output folder directly in Explorer.
+- **Progress popup** -Replaced the inline progress bar with a modal Windows-style progress dialog that appears during long operations.
+- **Wizard** - Now wizard features app information.
+- **New versions** - WinVFE now features new version checker, which will trigger a pop up if new release published on github.
 
-    Files not encrypting properly due to missing function
-    Files not decrypting properly due to missing function
-    Compress and encrypt buttons going out of window bounds when adding multiple files
+**Compression changes**
+- Removed the custom `.vz` format from the Compress tab -Compress now produces real `.zip` or `.7z` files that open in any archive tool.
+- `.vz` files can still be decompressed (legacy support kept in `decompress_file`).
+- Removed zlib, zstd, lz4 algorithm options from the Compress tab.
+- Removed the metadata note feature from the Compress tab.
 
-Removed:
-
-    zstd compression algorithm
-    lz4 compression algorithm
-
-Added:
-
-    7z compression algorithm
-    Multiple files encryption (encrypted archive)
-    UI minor fixes (adding multiple files throughout a period of time not at once etc..)
-
-
-What's new:
-
-- _Renamed_ to WinVFE (Windows Vault file encryptor).
-- _Added_ Blowfish encryption algorithm (decryption too).
-- Added zlib compression feature.
-- _Added_ zlib decompression feature.
-- _Added_ UI changes: Drag & Drop files, Wizard UI slightly changed (combined with info tab).
-- _Removed_ minor UI features in order to improve speed and reduce clutter.
-- _Added_ files saving with untraceable name instead of previously file name being kept with .vault extension being added.
+### Bug fixes
+- Decompress browse filter now accepts `.zip` and `.7z` in addition to `.vz`.
+- Multi-file ZIP compression no longer double-wraps (was bundling into a temp zip then recompressing into `.vz`).
+- Output filenames now use the correct extension (`.zip` / `.7z`) instead of always `.vz`.
  
 Algorithms:
 ```
@@ -52,8 +44,9 @@ Blowfish-CBC
 
 # Compression
 
-zlib
+zip
 7z
+vz
 ```
 
 
