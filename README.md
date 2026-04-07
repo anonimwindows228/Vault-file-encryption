@@ -21,7 +21,7 @@ _06.04.2026_
 - **Windows installer** - `WinVFE_Setup_v1.5.1.exe` built with Inno Setup. Installs to Program Files, writes registry keys, creates Start Menu and desktop shortcuts, includes a working uninstaller.
 - **Encrypted ZIP support** - ZIP archives can now be password-protected using AES-256 encryption via `pyzipper`. Requires `pip install pyzipper`.
 - **Open folder button** -After any compress/encrypt/decrypt operation, a button appears next to the result label to open the output folder directly in Explorer.
-- **Progress popup** -Replaced the inline progress bar with a modal Windows-style progress dialog that appears during long operations.
+- **Progress popup** -Replaced the inline progress bar with a progress bar that appears during long operations.
 - **Wizard** - Now wizard features app information.
 - **New versions** - WinVFE now features new version checker, which will trigger a pop up if new release published on github.
 
