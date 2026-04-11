@@ -2,6 +2,7 @@ import io
 import json
 import os
 import struct
+import subprocess
 import zlib
 import lzma
 
@@ -22,7 +23,7 @@ SALT_SIZE  = 32
 NONCE_SIZE = 12
 ITERATIONS = 600_000
 
-ALGORITHMS = ["zip", "7z"]
+ALGORITHMS = ["zip", "7z", "rar"]
 
 
 def _derive_key(password: str, salt: bytes) -> bytes:
@@ -38,17 +39,23 @@ def _decompress(data: bytes, algorithm: str) -> bytes:
 
 
 def available_algorithms() -> list[str]:
-    return ["zip", "7z"]
+    return ["zip", "7z", "rar"]
 
 
 def compress_file(input_path: str, output_path: str,
                   algorithm: str = "zip",
                   password: str = "",
                   metadata: dict | None = None,
-                  progress=None) -> None:
+                  progress=None,
+                  level: str = "best") -> None:
     import zipfile as _zf
 
     def p(v, m=""): progress and progress(v, m)
+
+    # Map level string to numeric values
+    zip_level  = 9 if level == "best" else 6
+    lzma_preset = 9 if level == "best" else 6
+    rar_method  = "-m5" if level == "best" else "-m3"
 
     if algorithm == "zip":
         p(0.05, "Reading file…")
@@ -66,7 +73,7 @@ def compress_file(input_path: str, output_path: str,
                 zf.write(input_path, os.path.basename(input_path))
         else:
             with _zf.ZipFile(output_path, "w",
-                             _zf.ZIP_DEFLATED, compresslevel=9) as zf:
+                             _zf.ZIP_DEFLATED, compresslevel=zip_level) as zf:
                 zf.write(input_path, os.path.basename(input_path))
         p(1.00, "Done.")
         return
@@ -76,14 +83,29 @@ def compress_file(input_path: str, output_path: str,
         with open(input_path, "rb") as f:
             raw = f.read()
         p(0.30, "Compressing with LZMA/XZ…")
-        compressed = lzma.compress(raw, format=lzma.FORMAT_XZ, preset=9)
+        compressed = lzma.compress(raw, format=lzma.FORMAT_XZ, preset=lzma_preset)
         p(0.90, "Writing output file…")
         with open(output_path, "wb") as f:
             f.write(compressed)
         p(1.00, "Done.")
         return
 
-    raise ValueError(f"Unsupported algorithm: {algorithm!r}. Use 'zip' or '7z'.")
+    if algorithm == "rar":
+        p(0.10, "Compressing with RAR…")
+        cmd = ["rar", "a", rar_method, "-ep", output_path, input_path]
+        try:
+            result = subprocess.run(cmd, capture_output=True)
+        except FileNotFoundError:
+            raise RuntimeError(
+                "rar.exe not found. Make sure WinRAR is installed and rar.exe "
+                "is on your PATH (e.g. C:\\Program Files\\WinRAR\\).")
+        if result.returncode not in (0, 1):
+            err = result.stderr.decode(errors="replace").strip()
+            raise RuntimeError(f"WinRAR error (code {result.returncode}):\n{err}")
+        p(1.00, "Done.")
+        return
+
+    raise ValueError(f"Unsupported algorithm: {algorithm!r}. Use 'zip', '7z', or 'rar'.")
 
 
 def decompress_file(input_path: str, output_dir: str,
